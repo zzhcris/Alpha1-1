@@ -70,6 +70,7 @@ GameObject:
   - component: {fileID: 1302344069168057083}
   - component: {fileID: 1302344069168057080}
   - component: {fileID: 1302344069168057081}
+  - component: {fileID: 1302344069168057061}
   m_Layer: 0
   m_Name: EnemyMaleZombie
   m_TagString: Enemy
@@ -192,3 +193,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1302344069168057061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302344069168057086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4850f409b222849adfaa2fd8955ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPosition: {x: 4, y: -3.5, z: 0}
+  mySpeed: 2
+  attackCollider: {fileID: 1302344068161659870}
+  enemyLife: 2
