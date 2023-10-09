@@ -11,7 +11,9 @@ public class Player : MonoBehaviour
     public GameObject attackCollider;
     public GameObject BladeEnergyPrefab;
     public int playerLife;
- 
+    //private float nextTransformTime = 0f; // Added for cooldown.
+    //public float transformCooldown = 5f;  // Time in seconds after which another enemy can be transformed.
+
     Rigidbody2D myRigi;
     float energyDistance;
     
@@ -84,6 +86,52 @@ public class Player : MonoBehaviour
             PlayerPrefs.SetInt("PlayerBlade", playerBlade);
             myCanvas.BladeUpdate(); 
         }
+
+        //if (Input.GetKeyDown(KeyCode.Return))
+        //{
+        //    EnemyMaleZombie[] allEnemies = FindObjectsOfType<EnemyMaleZombie>();
+        //    EnemyMaleZombie closestEnemy = null;
+        //    float closestDistance = float.MaxValue;
+
+        //    foreach (EnemyMaleZombie enemy in allEnemies)
+        //    {
+        //        float distanceToPlayer = Vector3.Distance(transform.position, enemy.transform.position);
+        //        if (distanceToPlayer < closestDistance)
+        //        {
+        //            closestDistance = distanceToPlayer;
+        //            closestEnemy = enemy;
+        //        }
+        //    }
+
+        //    if (closestEnemy != null)
+        //    {
+        //        closestEnemy.TransformToAlien();
+        //    }
+        //}
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            EnemyMaleZombie[] allEnemies = FindObjectsOfType<EnemyMaleZombie>();
+            EnemyMaleZombie closestEnemy = null;
+            float closestDistance = float.MaxValue;
+
+            foreach (EnemyMaleZombie enemy in allEnemies)
+            {
+                float distanceToPlayer = Vector3.Distance(transform.position, enemy.transform.position);
+                if (distanceToPlayer < closestDistance)
+                {
+                    closestDistance = distanceToPlayer;
+                    closestEnemy = enemy;
+                }
+            }
+
+            if (closestEnemy != null)
+            {
+                closestEnemy.TransformToAlien();
+            }
+        }
+
+
 
     }
 

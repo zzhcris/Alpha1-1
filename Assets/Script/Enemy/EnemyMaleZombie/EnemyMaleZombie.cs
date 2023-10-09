@@ -14,6 +14,9 @@ public class EnemyMaleZombie : MonoBehaviour
     Vector3 turnPoint;
     bool isFirstTimeIdle;
     bool isDead;
+    private bool isTransformed = false;
+    //private float nextTransformTime = 0f;
+    //public float transformCooldown = 5f;
 
     GameObject myPlayer;
 
@@ -31,6 +34,11 @@ public class EnemyMaleZombie : MonoBehaviour
 
     void Update()
     {
+        if (isTransformed)
+        {
+            transform.position = myPlayer.transform.position - new Vector3(1.5f, 0, 0);
+            return; // Return to prevent other update actions
+        }
 
         if (Vector3.Distance(transform.position, myPlayer.transform.position) <= 1.5f && !isDead)
         {
@@ -100,6 +108,8 @@ public class EnemyMaleZombie : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Collision detected with: " + collision.gameObject.name);
+        HandleCollisionWhenTransformed(collision);
         if (collision.tag == "PlayerAttack" || collision.tag == "PlayerSkill")
         {
             if(collision.tag == "PlayerAttack")
@@ -119,6 +129,42 @@ public class EnemyMaleZombie : MonoBehaviour
             {
                 myAnim.SetTrigger("Dead");
                 isDead = true;
+                StartCoroutine("AfterDie");
+            }
+        }
+    }
+
+    public void TransformToAlien()
+    {
+        if (!isTransformed)
+        {
+            // Change the enemy's position behind the player
+            transform.position = myPlayer.transform.position - new Vector3(1.5f, 0, 0); // Adjust the value as needed
+
+            // Refill the enemy's life
+            enemyLife = 2;
+
+            // Set the flag
+            isTransformed = true;
+
+        }
+    }
+
+
+    void HandleCollisionWhenTransformed(Collider2D collision)
+    {
+        if (isTransformed && (collision.tag == "Enemy" || collision.tag == "Zombie"))
+        {
+            enemyLife--;
+
+            if (enemyLife >= 1)
+            {
+                myAnim.SetTrigger("Hurt");
+            }
+            else
+            {
+                myAnim.SetTrigger("Dead");
+                isTransformed = false; // Reset the transformation
                 StartCoroutine("AfterDie");
             }
         }
